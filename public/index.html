@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Carte Météo</title>
+
+  <script src="https://cdn.tailwindcss.com"></script> <!-- Correction pour Tailwind officiel -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <link rel="stylesheet" href="main.css">
+
+</head>
+
+<body class="bg-gray-100 h-screen w-screen overflow-hidden flex">
+
+  <!-- Sidebar -->
+  <div id="sidebar" class="bg-white shadow-md w-72 p-4 space-y-4 transition-transform duration-300 ease-in-out">
+    <button id="toggleSidebar"
+      class="absolute top-2 right-2 text-gray-500 hover:text-black text-xl font-bold">×</button>
+
+    <button id="loadButton"
+      class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded flex items-center gap-2">
+      <span id="loader"
+        class="hidden animate-spin h-5 w-5 border-2 border-white border-t-transparent rounded-full"></span>
+      <span id="buttonText">Load data</span>
+    </button>
+
+    <input type="text" id="dateFilter" placeholder="YYYY-MM-DD HH:MM" class="border p-1 w-full">
+    <button id="filterButton" class="bg-blue-500 text-white p-1 mt-1 w-full">Filtrer</button>
+    <hr class="my-4">
+
+    <div class="space-y-2">
+      <h3 class="font-semibold">Couches</h3>
+
+      <button id="toggleRegion" class="bg-gray-200 hover:bg-gray-300 w-full py-1 rounded">
+        🏙️ Region : visible
+      </button>
+      <button id="toggleDistricts" class="bg-gray-200 hover:bg-gray-300 w-full py-1 rounded">
+        🗺️ Districts : visible
+      </button>
+      <button id="toggleCommunes" class="bg-gray-200 hover:bg-gray-300 w-full py-1 rounded">
+        🏙️ Communes : visible
+      </button>
+      <button id="toggleFokotany" class="bg-gray-200 hover:bg-gray-300 w-full py-1 rounded">
+        🏙️ Fokotany : visible
+      </button>
+      <button id="toggleMeteo" class="bg-gray-200 hover:bg-gray-300 w-full py-1 rounded">
+        🌧️ Météo : visible
+      </button>
+      <button id="btn-regrouper" class="bg-gray-200 hover:bg-gray-300 w-full py-1 rounded">Regrouper (Colorier)</button>
+
+    </div>
+    
+    <div id="message" class="mt-4 text-sm text-gray-700"></div>
+  </div>
+
+  <!-- Carte -->
+  <div class="flex-1 relative">
+    <!-- Bouton d'ouverture du menu -->
+    <button id="openSidebar" class="absolute top-4 left-4 z-10 bg-white shadow px-3 py-1 rounded hidden">≡</button>
+
+    <!-- Carte Leaflet -->
+    <div id="map" class="h-full w-full z-0"></div>
+  </div>
+
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@turf/turf@6/turf.min.js"></script>
+
+  <script src="main.js"></script>
+  <script>
+    const sidebar = document.getElementById('sidebar');
+    const openSidebar = document.getElementById('openSidebar');
+    const toggleSidebar = document.getElementById('toggleSidebar');
+
+    toggleSidebar.addEventListener('click', () => {
+      sidebar.style.transform = 'translateX(-100%)';
+      openSidebar.classList.remove('hidden');
+    });
+
+    openSidebar.addEventListener('click', () => {
+      sidebar.style.transform = 'translateX(0)';
+      openSidebar.classList.add('hidden');
+    });
+  </script>
+</body>
+
+
+</html>
